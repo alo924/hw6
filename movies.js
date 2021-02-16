@@ -64,6 +64,8 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     document.querySelector(`${movieId}`).classList.add('opacity-20') 
     }
 
+    let docRef = await db.collection('watched').doc(`${movieId}`).set({})
+
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 2
