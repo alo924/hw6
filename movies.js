@@ -25,8 +25,8 @@ window.addEventListener('DOMContentLoaded', async function(event) {
       let movies = await response.json()
       console.log(movies)
 
-      let moviesList = movies.results
-      console.log(moviesList.length)
+      let moviesAllList = movies.results
+      console.log(moviesAllList.length)
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 1
@@ -44,40 +44,20 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // </div>
   // ⬇️ ⬇️ ⬇️
 
-  for (let i=0; i<moviesList.length; i++){
-    let movieId = moviesList[i].id
-    let posterURL = moviesList[i].poster_path
+  for (let i=0; i<moviesAllList.length;i++) {
+    let movieId = moviesAllList[i].id
+    let posterURL = moviesAllList[i].poster_path
 
     console.log(movieId)
     console.log(posterURL)
 
     document.querySelector('.movies').insertAdjacentHTML('beforeend', `
     <div class="movies-${movieId} w-1/5 p-4">
-    <img src="https://image.tmdb.org/t/p/w500/${posterURL}" class="w-full">
-    <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">Watched</a>
+      <img src="https://image.tmdb.org/t/p/w500/${posterURL}" class="w-full">
+      <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">Watched</a>
     </div>
     `)
   
-    let watchedButton = document.querySelector ('.watched-button')
-    let MovieWatched = document.querySelector (`.movie-${movieId}`)
-
-    document.querySelector(`watched-button`).addEventListener('click', async function(event){
-      event.preventDefault()
-      document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
-      console.log(`Movie ${movieId} was watched!`)
-
-      let querySnapshot = await db.collection ('watched').doc(`${movieId}`).set({})
-       let watchedMovies = querySnapshot.docs
-      for (let j=0; j<watchedMovies.length; j++){
-        let watchedMovies = watched[j].data()
-        watched.name
-      })
-
-
-    })
-
-
-
 
 
   // ⬆️ ⬆️ ⬆️ 
@@ -96,13 +76,17 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // ⬇️ ⬇️ ⬇️
 
 
+  document.querySelector(`.watched-button`).addEventListener('click', async function(event){
+    event.preventDefault()
+    document.querySelector('.movies').classList.add('opacity-20')
+    console.log(`Movie ${movieId} was watched!`)
+  
 
+  }
+  )
+  
 
-
-
-
-
-
+}
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 3
