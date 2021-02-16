@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // </div>
   // ⬇️ ⬇️ ⬇️
 
-  for (let i=0; i<movies.length; i++{
+  for (let i=0; i<movies.length; i++){
     let movieId = movies[i].id
     let posterURL=movies.[i].poster_path
 
@@ -53,7 +53,14 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
     </div>
     `)
-  })
+  }
+
+  let querySnapshot = await db.collection ('watched').get()
+    let watchedMovies = querySnapshot.docs
+    if (watchedMovies.data()){
+      document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
+    }
+
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 2
