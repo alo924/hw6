@@ -20,9 +20,9 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // console to ensure you've got good data
   // ⬇️ ⬇️ ⬇️
 
-  let response = await fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=e3412ea997f90ec10abcc17d512d013e&language=en-US')
-  let json = await response.json()
-  let movies = [json]
+  let url = 'https://api.themoviedb.org/3/movie/now_playing?api_key=e3412ea997f90ec10abcc17d512d013e&language=en-US'
+  let response = await fetch (url)
+  let movies = await response.json()
   console.log(movies)
 
   // ⬆️ ⬆️ ⬆️ 
@@ -41,11 +41,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // </div>
   // ⬇️ ⬇️ ⬇️
 
-  let querySnapshot = await db.collection ('watched').get()
-  let watchedMovies = querySnapshot.docs
-  if (watchedMovies.data()){
-    document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
-  }
+
 
   for (let i=0; i<movies.length; i++){
     let movieId = movies[i].id
@@ -62,7 +58,11 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     `)
   }
 
-  
+  let querySnapshot = await db.collection ('watched').doc(`${movieId}`).set({})
+  let watchedMovies = querySnapshot.docs
+  if (watchedMovies.data()){
+    document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
+  }
 
 
   // ⬆️ ⬆️ ⬆️ 
