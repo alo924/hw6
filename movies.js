@@ -12,6 +12,7 @@
 // complete image URL
 
 let db=firebase.firestore()
+
 window.addEventListener('DOMContentLoaded', async function(event) {
   // Step 1: Construct a URL to get movies playing now from TMDB, fetch
   // data and put the Array of movie Objects in a variable called
