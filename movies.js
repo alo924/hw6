@@ -12,18 +12,19 @@
 // complete image URL
 
 let db=firebase.firestore()
-
 window.addEventListener('DOMContentLoaded', async function(event) {
+
   // Step 1: Construct a URL to get movies playing now from TMDB, fetch
   // data and put the Array of movie Objects in a variable called
   // movies. Write the contents of this array to the JavaScript
   // console to ensure you've got good data
   // ⬇️ ⬇️ ⬇️
-
-  let url = 'https://api.themoviedb.org/3/movie/now_playing?api_key=e3412ea997f90ec10abcc17d512d013e&language=en-US'
-  let response = await fetch (url)
-  let movies = await response.json()
-  console.log(movies)
+      
+      let url = 'https://api.themoviedb.org/3/movie/now_playing?api_key=e3412ea997f90ec10abcc17d512d013e&language=en-US'
+      let response = await fetch (url)
+      let json = await response.json()
+      let movies = json
+      console.log(movies)
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 1
@@ -45,24 +46,39 @@ window.addEventListener('DOMContentLoaded', async function(event) {
 
   for (let i=0; i<movies.length; i++){
     let movieId = movies[i].id
-    let posterURL= movies[i].poster_path
+    let posterURL = movies[i].poster_path
+    let movieTitle = movies[i].original_title
 
     console.log(movieId)
     console.log(posterURL)
+    console.log(mo)
 
     document.querySelector('.movies').insertAdjacentHTML('beforeend', `
     <div class="movies-${movieId} w-1/5 p-4">
-    <img src="https://image.tmdb.org/t/p/w500/${posterURL}.jpg" class="w-full">
-    <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
+    <img src="https://image.tmdb.org/t/p/w500/${posterURL}" class="w-full">
+    <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">Watched</a>
     </div>
     `)
-  }
+  
+    document.querySelector(`watched-button`).addEventListener('click', async function(event){
+      event.preventDefault()
+      document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
+      console.log(`Movie ${movieId} was watched!`)
 
-  let querySnapshot = await db.collection ('watched').doc(`${movieId}`).set({})
-  let watchedMovies = querySnapshot.docs
-  if (watchedMovies.data()){
-    document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
-  }
+      let querySnapshot = await db.collection ('watched').doc(`${movieId}`).set({})
+       let watchedMovies = querySnapshot.docs
+      for (let j=0; j<watchedMovies.length; j++){
+        let watchedMovies = watched[j].data()
+        watched.name
+      })
+
+
+    })
+
+
+  
+    
+  }}
 
 
   // ⬆️ ⬆️ ⬆️ 
@@ -109,16 +125,4 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   database.
   // - Hint: you can use if (document) with no comparison
   //   operator to test for the existence of an object.
-
-
-
-
-
-
-
-
-
-
-
-
 })
