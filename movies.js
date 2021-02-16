@@ -22,9 +22,11 @@ window.addEventListener('DOMContentLoaded', async function(event) {
       
       let url = 'https://api.themoviedb.org/3/movie/now_playing?api_key=e3412ea997f90ec10abcc17d512d013e&language=en-US'
       let response = await fetch (url)
-      let json = await response.json()
-      let movies = json
+      let movies = await response.json()
       console.log(movies)
+
+      let moviesList = movies.results
+      console.log(moviesList.length)
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 1
@@ -42,16 +44,12 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // </div>
   // ⬇️ ⬇️ ⬇️
 
-
-
-  for (let i=0; i<movies.length; i++){
-    let movieId = movies[i].id
-    let posterURL = movies[i].poster_path
-    let movieTitle = movies[i].original_title
+  for (let i=0; i<moviesList.length; i++){
+    let movieId = moviesList[i].id
+    let posterURL = moviesList[i].poster_path
 
     console.log(movieId)
     console.log(posterURL)
-    console.log(mo)
 
     document.querySelector('.movies').insertAdjacentHTML('beforeend', `
     <div class="movies-${movieId} w-1/5 p-4">
@@ -60,6 +58,9 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     </div>
     `)
   
+    let watchedButton = document.querySelector ('.watched-button')
+    let MovieWatched = document.querySelector (`.movie-${movieId}`)
+
     document.querySelector(`watched-button`).addEventListener('click', async function(event){
       event.preventDefault()
       document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
@@ -76,9 +77,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     })
 
 
-  
-    
-  }}
+
 
 
   // ⬆️ ⬆️ ⬆️ 
