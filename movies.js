@@ -40,9 +40,15 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // </div>
   // ⬇️ ⬇️ ⬇️
 
+  let querySnapshot = await db.collection ('watched').get()
+  let watchedMovies = querySnapshot.docs
+  if (watchedMovies.data()){
+    document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
+  }
+
   for (let i=0; i<movies.length; i++){
     let movieId = movies[i].id
-    let posterURL=movies.[i].poster_path
+    let posterURL= movies[i].poster_path
 
     console.log(movieId)
     console.log(posterURL)
@@ -55,11 +61,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     `)
   }
 
-  let querySnapshot = await db.collection ('watched').get()
-    let watchedMovies = querySnapshot.docs
-    if (watchedMovies.data()){
-      document.querySelector(`.movie-${movieId}`).classList.add('opacity-20')
-    }
+  
 
 
   // ⬆️ ⬆️ ⬆️ 
