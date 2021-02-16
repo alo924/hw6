@@ -52,12 +52,17 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     console.log(posterURL)
 
     document.querySelector('.movies').insertAdjacentHTML('beforeend', `
-    <div class="movies-${movieId} w-1/5 p-4">
+      <div class="movies-${movieId} w-1/5 p-4">
       <img src="https://image.tmdb.org/t/p/w500/${posterURL}" class="w-full">
       <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">Watched</a>
-    </div>
-    `)
-  
+      </div>
+      `)
+
+    document.querySelector(`${movieId} .watched-button`).addEventListener('click', async function(event){
+    console.log(`Movie ${movieId} was watched!`)
+    event.preventDefault()
+    document.querySelector(`${movieId}`).classList.add('opacity-20') 
+    }
 
 
   // ⬆️ ⬆️ ⬆️ 
@@ -76,17 +81,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // ⬇️ ⬇️ ⬇️
 
 
-  document.querySelector(`.watched-button`).addEventListener('click', async function(event){
-    event.preventDefault()
-    document.querySelector('.movies').classList.add('opacity-20')
-    console.log(`Movie ${movieId} was watched!`)
-  
-
-  }
-  )
-  
-
-}
+ 
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 3
@@ -108,4 +103,5 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   database.
   // - Hint: you can use if (document) with no comparison
   //   operator to test for the existence of an object.
+
 })
